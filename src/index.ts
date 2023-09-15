@@ -22,7 +22,7 @@ bot.on("ready", async () => {
   changePfp();
 });
 
-setInterval(changePfp, 1000 * 60 * 10); // 10 minutes
+setInterval(changePfp, 1000 * 60 * 30); // 10 minutes
 
 registerCallback(() => {
   try {
