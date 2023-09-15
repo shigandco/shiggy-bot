@@ -6,6 +6,7 @@ declare global {
       DEV_ROLE: string;
       PREFIX: string;
       ENABLE_HEALTHCHECK: string;
+      SHARED_KEY?: string;
     }
   }
 }

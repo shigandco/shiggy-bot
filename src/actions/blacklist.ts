@@ -29,5 +29,19 @@ export default async function Blacklist(message: Message, shiggy?: string) {
 
   await writeFile("./shiggy/blacklist.json", JSON.stringify(blacklist));
 
+  if (!process.env.SHARED_KEY)
+    message.channel.send(
+      "Warning: No shared key set! This request will be unauthenticated"
+    );
+
+  const options: RequestInit = {
+    method: "POST",
+  };
+
+  if (process.env.SHARED_KEY)
+    options.headers = { Authorization: process.env.SHARED_KEY };
+
+  await fetch(`http://api/api/v0/blacklist`, options);
+
   await message.channel.send(`Blacklisted shiggy ${shiggy}!`);
 }
