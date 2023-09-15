@@ -10,6 +10,14 @@ export default new PrefixCommand({
   usage: "blacklist <shiggy>",
   ownerOnly: true,
   callback: async (message: PrefixCommandMessage, args: string[]) => {
-    Blacklist(message, args[0]);
+    if (args.length === 0) {
+      return message.channel.send("You need to specify a shiggy!");
+    }
+    const success = await Blacklist(args[0]);
+    if (success) {
+      message.channel.send("Shiggy blacklisted!");
+    } else {
+      message.channel.send("Failed to blacklist shiggy!");
+    }
   },
 });

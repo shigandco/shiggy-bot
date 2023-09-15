@@ -2,13 +2,9 @@ import { Message } from "discord.js";
 import { existsSync } from "fs";
 import { readFile, readdir, rm, writeFile } from "fs/promises";
 
-export default async function Blacklist(message: Message, shiggy?: string) {
-  if (!shiggy) {
-    await message.channel.send("You need to specify a shiggy!");
-    return;
-  }
+export default async function Blacklist(shiggy: string) {
   if (!(await readdir("./shiggy")).includes(shiggy)) {
-    return message.channel.send("That shiggy doesn't exist!");
+    return false;
   }
   await rm(`./shiggy/${shiggy}`, { recursive: true, force: true });
   const shiggiesFile = JSON.parse(
@@ -37,5 +33,5 @@ export default async function Blacklist(message: Message, shiggy?: string) {
 
   await writeFile("./shiggy/blacklist.json", JSON.stringify(blacklist));
 
-  await message.channel.send(`Failed to blacklist shiggy ${shiggy}!`);
+  return true;
 }
