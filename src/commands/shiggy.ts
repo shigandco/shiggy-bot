@@ -15,9 +15,18 @@ export default [
   new PrefixCommand({
     name: "shiggy",
     description: "shiggy :D",
-    usage: "shiggy",
-    callback: async (msg) => {
-      msg.reply(`https://shiggy.fun/api/v2/random?cachebust=${Date.now()}`);
+    usage: "shiggy [id]",
+    callback: async (msg, args) => {
+      let ShiggyId;
+      if (args.length == 0) {
+        const ShiggyId = (await fetch("http://api/api/v3/random")).headers.get(
+          "Shiggy-Id"
+        );
+      } else {
+        ShiggyId = args[0];
+      }
+
+      msg.reply(`https://shiggy.fun/api/v3/shiggies/${ShiggyId}`);
     },
   }),
 
