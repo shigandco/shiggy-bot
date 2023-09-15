@@ -19,6 +19,14 @@ export default async function Blacklist(message: Message, shiggy?: string) {
 
   await writeFile("./shiggy/shiggies.json", JSON.stringify(shiggiesFile));
 
+  const sizesFile = JSON.parse(
+    await readFile("./shiggy/sizes.json", "utf-8")
+  ) as Record<string, { width: number; height: number }>;
+
+  delete sizesFile[shiggy];
+
+  await writeFile("./shiggy/sizes.json", JSON.stringify(sizesFile));
+
   const blacklist = (
     existsSync("./shiggy/blacklist.json")
       ? JSON.parse(await readFile("./shiggy/blacklist.json", "utf-8"))
@@ -41,7 +49,11 @@ export default async function Blacklist(message: Message, shiggy?: string) {
   if (process.env.SHARED_KEY)
     options.headers = { Authorization: process.env.SHARED_KEY };
 
-  await fetch(`http://api/api/v0/blacklist`, options);
+  try {
+    await fetch(`http://api/api/v0/blacklist`, options);
 
-  await message.channel.send(`Blacklisted shiggy ${shiggy}!`);
+    await message.channel.send(`Blacklisted shiggy ${shiggy}!`);
+  } catch (e) {
+    await message.channel.send(`Failed to blacklist shiggy ${shiggy}!`);
+  }
 }
