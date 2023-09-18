@@ -15,6 +15,7 @@ import {
 import bot from ".";
 import { readdirSync } from "fs";
 import { join } from "path";
+import { OWNERS } from "./constants";
 
 export const prefixCommands: PrefixCommand[] = [];
 export const slashCommands = new Collection<
@@ -93,11 +94,7 @@ async function possiblyTriggerPrefixCommand(
     return !!alias;
   });
   if (!command || !chosenAlias) return;
-  if (
-    command.ownerOnly &&
-    !message.member?.roles.cache.has(process.env.DEV_ROLE)
-  )
-    return;
+  if (command.ownerOnly && !OWNERS.includes(message.author.id)) return;
 
   for (let i = 0; i < chosenAlias.split(/ +/g).length; i++) args.shift();
 
