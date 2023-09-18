@@ -12,7 +12,7 @@ const slashcommand: SlashCommand = {
   callback: async (interaction) => {
     let ShiggyId;
     if (interaction.options.getInteger("id") == null) {
-      ShiggyId = (await fetch("http://api/api/v3/random")).headers.get(
+      ShiggyId = (await fetch("http://api:4321/api/v3/random")).headers.get(
         "Shiggy-Id"
       );
     } else {
@@ -30,7 +30,7 @@ export default [
     callback: async (msg, args) => {
       let ShiggyId;
       if (args.length == 0) {
-        ShiggyId = (await fetch("http://api/api/v3/random")).headers.get(
+        ShiggyId = (await fetch("http://api:4321/api/v3/random")).headers.get(
           "Shiggy-Id"
         );
       } else {
