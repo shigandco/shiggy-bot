@@ -3,11 +3,22 @@ import { PrefixCommand, SlashCommand } from "../commands";
 import changePfp from "../pfp";
 
 const slashcommand: SlashCommand = {
-  data: new SlashCommandBuilder().setName("shiggy").setDescription("shiggy :D"),
+  data: new SlashCommandBuilder()
+    .setName("shiggy")
+    .setDescription("shiggy :D")
+    .addIntegerOption((option) =>
+      option.setName("id").setDescription("shiggy id").setRequired(false)
+    ),
   callback: async (interaction) => {
-    await interaction.reply(
-      `https://shiggy.fun/api/v2/random?cachebust=${Date.now()}`
-    );
+    let ShiggyId;
+    if (interaction.options.getInteger("id") == null) {
+      ShiggyId = (await fetch("http://api/api/v3/random")).headers.get(
+        "Shiggy-Id"
+      );
+    } else {
+      ShiggyId = interaction.options.getInteger("id");
+    }
+    await interaction.reply(`https://shiggy.fun/api/v3/shiggies/${ShiggyId}`);
   },
 };
 
