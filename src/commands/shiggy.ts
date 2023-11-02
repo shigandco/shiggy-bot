@@ -18,7 +18,7 @@ const slashcommand: SlashCommand = {
     } else {
       ShiggyId = interaction.options.getInteger("id");
     }
-    await interaction.reply(`https://shiggy.fun/api/v3/shiggies/${ShiggyId}`);
+    await interaction.reply(`https://api.shig.gy/api/v3/shiggies/${ShiggyId}`);
   },
 };
 
