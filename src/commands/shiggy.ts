@@ -18,7 +18,6 @@ const slashcommand: SlashCommand = {
     } else {
       ShiggyId = interaction.options.getInteger("id");
     }
-    if (Number.isNaN(ShiggyId)) return interaction.reply("nuh uh");
     await interaction.reply(`https://api.shig.gy/api/v3/shiggies/${ShiggyId}`);
   },
 };
@@ -31,13 +30,16 @@ export default [
     callback: async (msg, args) => {
       let ShiggyId;
       if (args.length == 0) {
-        ShiggyId = (await fetch("http://api:4321/api/v3/random")).headers.get(
-          "Shiggy-Id"
+        ShiggyId = Number(
+          (await fetch("http://api:4321/api/v3/random")).headers.get(
+            "Shiggy-Id"
+          )
         );
       } else {
-        ShiggyId = args[0];
+        ShiggyId = Number(args[0]);
       }
 
+      if (Number.isNaN(ShiggyId)) return msg.reply("nuh uh");
       msg.reply(`https://shiggy.fun/api/v3/shiggies/${ShiggyId}`);
     },
   }),
