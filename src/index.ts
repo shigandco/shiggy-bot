@@ -9,6 +9,7 @@ import changePfp from "./pfp";
 
 const bot = new Client({
   intents: ["Guilds", "MessageContent", "GuildMembers", "GuildMessages"],
+  allowedMentions: { parse: [] },
 });
 
 bot.on("ready", async () => {
