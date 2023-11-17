@@ -18,6 +18,7 @@ const slashcommand: SlashCommand = {
     } else {
       ShiggyId = interaction.options.getInteger("id");
     }
+    if (Number.isNaN(ShiggyId)) return interaction.reply("nuh uh");
     await interaction.reply(`https://api.shig.gy/api/v3/shiggies/${ShiggyId}`);
   },
 };
