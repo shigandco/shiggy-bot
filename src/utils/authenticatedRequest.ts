@@ -25,5 +25,5 @@ export default async function authenticatedRequest(
     };
   }
 
-  return await fetch(`${BASE_API}/${path}`, options);
+  return await fetch(`${BASE_API}${path}`, options);
 }
