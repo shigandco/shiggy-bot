@@ -1,37 +1,12 @@
-import { Message } from "discord.js";
-import { existsSync } from "fs";
-import { readFile, readdir, rm, writeFile } from "fs/promises";
+import authenticatedRequest from "../utils/authenticatedRequest";
 
 export default async function Blacklist(shiggy: string) {
-  if (!(await readdir("./shiggy")).includes(shiggy)) {
+  try {
+    await authenticatedRequest("/api/v0/blacklist", "POST", {
+      id: shiggy,
+    });
+    return true;
+  } catch (e) {
     return false;
   }
-  await rm(`./shiggy/${shiggy}`, { recursive: true, force: true });
-  const shiggiesFile = JSON.parse(
-    await readFile("./shiggy/shiggies.json", "utf-8")
-  ) as string[];
-
-  shiggiesFile.splice(shiggiesFile.indexOf(shiggy), 1);
-
-  await writeFile("./shiggy/shiggies.json", JSON.stringify(shiggiesFile));
-
-  const sizesFile = JSON.parse(
-    await readFile("./shiggy/sizes.json", "utf-8")
-  ) as Record<string, { width: number; height: number }>;
-
-  delete sizesFile[shiggy];
-
-  await writeFile("./shiggy/sizes.json", JSON.stringify(sizesFile));
-
-  const blacklist = (
-    existsSync("./shiggy/blacklist.json")
-      ? JSON.parse(await readFile("./shiggy/blacklist.json", "utf-8"))
-      : []
-  ) as string[];
-
-  blacklist.push(shiggy);
-
-  await writeFile("./shiggy/blacklist.json", JSON.stringify(blacklist));
-
-  return true;
 }
