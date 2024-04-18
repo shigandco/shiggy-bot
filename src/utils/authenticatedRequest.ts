@@ -23,5 +23,5 @@ export default async function authenticatedRequest(
     };
   }
 
-  return await fetch(`http://api:4321/${path}`, options);
+  return await fetch(`http://api:3000/${path}`, options);
 }

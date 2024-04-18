@@ -1,6 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
 import { PrefixCommand, SlashCommand } from "../commands";
-import changePfp from "../pfp";
 
 const slashcommand: SlashCommand = {
   data: new SlashCommandBuilder()
@@ -12,13 +11,13 @@ const slashcommand: SlashCommand = {
   callback: async (interaction) => {
     let ShiggyId;
     if (interaction.options.getInteger("id") == null) {
-      ShiggyId = (await fetch("http://api:4321/api/v3/random")).headers.get(
+      ShiggyId = (await fetch("http://api:3000/api/v3/random")).headers.get(
         "Shiggy-Id"
       );
     } else {
       ShiggyId = interaction.options.getInteger("id");
     }
-    await interaction.reply(`https://api.shig.gy/api/v3/shiggies/${ShiggyId}`);
+    await interaction.reply(`https://shiggy.fun/api/v3/shiggies/${ShiggyId}`);
   },
 };
 
@@ -31,7 +30,7 @@ export default [
       let ShiggyId;
       if (args.length == 0) {
         ShiggyId = Number(
-          (await fetch("http://api:4321/api/v3/random")).headers.get(
+          (await fetch("http://api:3000/api/v3/random")).headers.get(
             "Shiggy-Id"
           )
         );
