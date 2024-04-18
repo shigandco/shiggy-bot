@@ -1,3 +1,5 @@
+import { BASE_API } from "../constants";
+
 export default async function authenticatedRequest(
   path: string,
   method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
@@ -23,5 +25,5 @@ export default async function authenticatedRequest(
     };
   }
 
-  return await fetch(`http://api:3000/${path}`, options);
+  return await fetch(`${BASE_API}/${path}`, options);
 }

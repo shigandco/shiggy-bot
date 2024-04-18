@@ -1,5 +1,6 @@
 import { SlashCommandBuilder } from "discord.js";
 import { PrefixCommand, SlashCommand } from "../commands";
+import { BASE_API } from "../constants";
 
 const slashcommand: SlashCommand = {
   data: new SlashCommandBuilder()
@@ -11,13 +12,13 @@ const slashcommand: SlashCommand = {
   callback: async (interaction) => {
     let ShiggyId;
     if (interaction.options.getInteger("id") == null) {
-      ShiggyId = (await fetch("http://api:3000/api/v3/random")).headers.get(
+      ShiggyId = (await fetch(`${BASE_API}/api/v3/random`)).headers.get(
         "Shiggy-Id"
       );
     } else {
       ShiggyId = interaction.options.getInteger("id");
     }
-    await interaction.reply(`https://shiggy.fun/api/v3/shiggies/${ShiggyId}`);
+    await interaction.reply(`${BASE_API}/api/v3/shiggies/${ShiggyId}`);
   },
 };
 
@@ -30,16 +31,14 @@ export default [
       let ShiggyId;
       if (args.length == 0) {
         ShiggyId = Number(
-          (await fetch("http://api:3000/api/v3/random")).headers.get(
-            "Shiggy-Id"
-          )
+          (await fetch(`${BASE_API}/api/v3/random`)).headers.get("Shiggy-Id")
         );
       } else {
         ShiggyId = Number(args[0]);
       }
 
       if (Number.isNaN(ShiggyId)) return msg.reply("nuh uh");
-      msg.reply(`https://shiggy.fun/api/v3/shiggies/${ShiggyId}`);
+      msg.reply(`${BASE_API}/api/v3/shiggies/${ShiggyId}`);
     },
   }),
 
