@@ -8,7 +8,7 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-COPY package.json pnpm.lock ./
+COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
 COPY . .
