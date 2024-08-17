@@ -27,6 +27,7 @@ export default [
     name: "shiggy",
     description: "shiggy :D",
     usage: "shiggy [id]",
+    aliases: ["shig"],
     callback: async (msg, args) => {
       let ShiggyId;
       if (args.length == 0) {
